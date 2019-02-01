@@ -16,12 +16,22 @@ class App extends Component {
   }
 
   render() {
+    const smurfs = this.props.smurfs.map(smurf => {
+      return (
+        <div className="smurf-container">
+          <h1>{smurf.name}</h1>
+          <p>age: {smurf.age}</p>
+          <p>height: {smurf.height}</p>
+        </div>
+      );
+    });
     return (
       <div className="App">
-        <h1>SMURFS! 2.0 W/ Redux</h1>
-        <div>Welcome to your Redux version of Smurfs!</div>
-        <div>Start inside of your `src/index.js` file!</div>
-        <div>Have fun!</div>
+        <h1>SMURF VILLAGE</h1>
+        {smurfs}
+        <form className="add-smurf-form">
+        
+        </form>
       </div>
     );
   }
