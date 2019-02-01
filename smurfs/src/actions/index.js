@@ -9,6 +9,9 @@ export const GET_SMURFS_FAILURE = 'GET_SMURFS_FAILURE';
 export const ADD_SMURF_START = 'ADD_SMURF_START';
 export const ADD_SMURF_SUCCESS = 'ADD_SMURF_SUCCESS';
 export const ADD_SMURF_FAILURE = 'ADD_SMURF_FAILURE';
+export const UPDATE_SMURF_START = 'UPDATE_SMURF_START';
+export const UPDATE_SMURF_SUCCESS = 'UPDATE_SMURF_SUCCESS';
+export const UPDATE_SMURF_FAILURE = 'UPDATE_SMURF_FAILURE';
 
 const API = axios.create({
   baseURL: `http://localhost:3333/smurfs/`
@@ -50,5 +53,22 @@ export const addSmurf = (smurfData) => dispatch => {
   .catch( err => {
     console.log(err);
     dispatch({ type: ADD_SMURF_FAILURE, payload: err.message });
+  })
+}
+
+export const updateSmurfStart = () => dispatch => {
+  dispatch({ type: UPDATE_SMURF_START });
+}
+
+export const updateSmurf = (smurfData) => dispatch => {
+  API
+  .put(`/${smurfData.id}`, smurfData)
+  .then( res => {
+    console.log(res);
+    dispatch({ type: UPDATE_SMURF_SUCCESS, payload: res.data });
+  })
+  .catch( err => {
+    console.log(err);
+    dispatch({ type: UPDATE_SMURF_FAILURE, payload: err.data });
   })
 }

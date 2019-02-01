@@ -7,7 +7,12 @@ import './App.css';
  `How do I ensure that my component links the state to props?`
  */
 import { connect } from 'react-redux';
-import { getSmurfs, addSmurf } from '../actions';
+import { 
+  getSmurfs, 
+  addSmurf,
+  updateSmurfStart,
+  updateSmurf
+} from '../actions';
 
 const emptySmurfFormData = {
   name: '',
@@ -45,7 +50,28 @@ class App extends Component {
     this.setState({
       ...this.state,
       smurfFormData: emptySmurfFormData
+    });
+  }
+
+  updateSmurfStart = e => {
+    this.props.updateSmurfStart();
+    // console.log("update smurf start id: ", e.target.name);
+    // console.log("smurf to update: ", this.props.smurfs.find( smurf => smurf.id === parseInt(e.target.name)))
+    const smurfToUpdate = this.props.smurfs.find( smurf => smurf.id === parseInt(e.target.name));
+    this.setState({
+      ...this.state,
+      smurfFormData: smurfToUpdate
     })
+  }
+
+  updateSmurf = e => {
+    e.preventDefault();
+    this.props.updateSmurf(this.state.smurfFormData);
+    // console.log("update smurf id: ", e.target.name);
+    this.setState({
+      ...this.state,
+      smurfFormData: emptySmurfFormData
+    });
   }
 
   render() {
@@ -55,6 +81,8 @@ class App extends Component {
           <h1>{smurf.name}</h1>
           <p>age: {smurf.age}</p>
           <p>height: {smurf.height}</p>
+          <button name={smurf.id} onClick={this.updateSmurfStart}>Update Smurf</button>
+          <button onClick={this.deleteSmurf}>Delete Smurf</button>
         </div>
       );
     });
@@ -64,9 +92,17 @@ class App extends Component {
         {smurfs}
         <form 
           className="add-smurf-form"
-          onSubmit={this.addSmurf}
+          onSubmit={
+            this.props.updatingSmurf ?
+            this.updateSmurf :
+            this.addSmurf
+          }
         >
-          <p>Add SMURF:</p>
+          <p>
+            {this.props.updatingSmurf ?
+            `Update SMURF:` :
+            `Add SMURF:`}
+          </p>
           <input
             type="text"
             name="name"
@@ -91,7 +127,12 @@ class App extends Component {
             value={this.state.smurfFormData.height}
             onChange={this.handleInput}
           />
-          <button type="submit">Add SMURF</button>
+          <button type="submit">
+            {this.props.updatingSmurf ? 
+              `Update SMURF`: 
+              `Add SMURF`
+            }
+          </button>
         </form>
       </div>
     );
@@ -100,7 +141,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    smurfs: state.smurfs
+    smurfs: state.smurfs,
+    updatingSmurf: state.updatingSmurf
   }
 }
 
@@ -108,6 +150,8 @@ export default connect(
   mapStateToProps,
   {
     getSmurfs,
-    addSmurf
+    addSmurf,
+    updateSmurfStart,
+    updateSmurf
   }
 )(App);

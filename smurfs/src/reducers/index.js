@@ -7,7 +7,10 @@ import {
   GET_SMURFS_FAILURE,
   ADD_SMURF_START,
   ADD_SMURF_SUCCESS, 
-  ADD_SMURF_FAILURE
+  ADD_SMURF_FAILURE,
+  UPDATE_SMURF_START,
+  UPDATE_SMURF_SUCCESS,
+  UPDATE_SMURF_FAILURE,
 } from '../actions';
 
 /*
@@ -23,15 +26,10 @@ import {
 */
 
 const initialState = {
-  smurfs: [
-    {
-      name: 'TESTSMURF',
-      age: 200,
-      height: '5cm'
-    }
-  ],
+  smurfs: [],
   fetchingSmurfs: false,
   addingSmurf: false,
+  updatingSmurf: false,
   error: null
 }
 
@@ -79,6 +77,24 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         addingSmurf: false,
+        error: action.payload
+      }
+      case UPDATE_SMURF_START:
+      return {
+        ...state,
+        updatingSmurf: true,
+        error: null
+      }
+    case UPDATE_SMURF_SUCCESS:
+      return {
+        ...state,
+        updatingSmurf: false,
+        smurfs: action.payload
+      }
+    case UPDATE_SMURF_FAILURE:
+      return {
+        ...state,
+        updatingSmurf: false,
         error: action.payload
       }
     default:
