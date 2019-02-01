@@ -22,23 +22,39 @@ In this challenge, you are to build the Smurfs village once again, only this tim
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-- [ ] In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
-- [ ] What is the difference between Application state and Component state? When would be a good time to use one over the other?
-- [ ] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+- [*] In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
+
+Actions: are dispatched by action creators based on user input. Action creators manage asynchronous tasks and dispatch further actions based on the outcome of the async task.
+
+Reducers: are responsible for updating the state of the application based on the type of action dispatched.
+
+Store: is the single point of the application responsible for managing application state. Since it is the only place where application state is (should be) managed, it is know as the 'single source of truth'...the final word on how the application should render.
+
+- [*] What is the difference between Application state and Component state? When would be a good time to use one over the other?
+
+Application state manages the view container components which in turn manage presentational components. The application state manages which views should be rendered and affect the overall function of the application.
+
+Component state is limited to how a particular component should render or behave.
+
+A good example is a form: the form's state could be managed by the view controller component which contains the form, for example the current input present on the form could be controlled by the view container component's state. Application state is only concerned with the value of the form once it is submitted, at that time the form component's state can be considered by an action creator and the application state updated accordingly.
+
+- [*] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+
+redux-thunk is a middleware that allows action-creators to return thunks instead of a single action object. This allows for asynchronous calls to reducers and therefore async management of state.
 
 ## Project Set Up
 
 Follow these steps to set up your project:
 
-- [ ] `fork & clone` this repository.
-- [ ] `cd` into the forked copy of this repository.
-- [ ] **RUN** `yarn` to retrieve all `server-side` the dependencies.
-- [ ] **RUN** `yarn start` or `npm start` to get your API up and running on `http://localhost:3333`. This is the **URL** you're going to need to use within your React app in order to make AJAX requests for data.
-- [ ] After your API is up and running, you can open chrome and type in `http://localhost:3333/smurfs`. You should see an empty Array `[]` returned to you. This is an array that your **API** will be using to store our Smurf Data.
-- [ ] **LOOK** at your `smurfs` directory and notice it's just a plain ol' React App that we've built using `create-react-app`.
-- [ ] **Open** `src/index.js` to make sure that your app is ready to roll with the proper middleware.
-- [ ] **cd** into `smurfs` and run `yarn` to retrieve the client side dependencies.
-- [ ] **RUN** `yarn start` to fire up your React application. There ought to be a pretty little message awaiting you welcoming you to the app. `Follow` the prompting.
+- [*] `fork & clone` this repository.
+- [*] `cd` into the forked copy of this repository.
+- [*] **RUN** `yarn` to retrieve all `server-side` the dependencies.
+- [*] **RUN** `yarn start` or `npm start` to get your API up and running on `http://localhost:3333`. This is the **URL** you're going to need to use within your React app in order to make AJAX requests for data.
+- [*] After your API is up and running, you can open chrome and type in `http://localhost:3333/smurfs`. You should see an empty Array `[]` returned to you. This is an array that your **API** will be using to store our Smurf Data.
+- [*] **LOOK** at your `smurfs` directory and notice it's just a plain ol' React App that we've built using `create-react-app`.
+- [*] **Open** `src/index.js` to make sure that your app is ready to roll with the proper middleware.
+- [*] **cd** into `smurfs` and run `yarn` to retrieve the client side dependencies.
+- [*] **RUN** `yarn start` to fire up your React application. There ought to be a pretty little message awaiting you welcoming you to the app. `Follow` the prompting.
 
 **LOOK** at all the files you've been given for this project. One important file to note is `server.js`.
 We've added a typical `redux` file structure for you:
