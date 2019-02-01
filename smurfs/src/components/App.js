@@ -11,7 +11,8 @@ import {
   getSmurfs, 
   addSmurf,
   updateSmurfStart,
-  updateSmurf
+  updateSmurf,
+  deleteSmurf
 } from '../actions';
 
 const emptySmurfFormData = {
@@ -74,6 +75,10 @@ class App extends Component {
     });
   }
 
+  deleteSmurf = e => {
+    this.props.deleteSmurf(parseInt(e.target.name));
+  }
+
   render() {
     const smurfs = this.props.smurfs.map(smurf => {
       return (
@@ -82,7 +87,7 @@ class App extends Component {
           <p>age: {smurf.age}</p>
           <p>height: {smurf.height}</p>
           <button name={smurf.id} onClick={this.updateSmurfStart}>Update Smurf</button>
-          <button onClick={this.deleteSmurf}>Delete Smurf</button>
+          <button name={smurf.id} onClick={this.deleteSmurf}>Delete Smurf</button>
         </div>
       );
     });
@@ -152,6 +157,7 @@ export default connect(
     getSmurfs,
     addSmurf,
     updateSmurfStart,
-    updateSmurf
+    updateSmurf,
+    deleteSmurf
   }
 )(App);
